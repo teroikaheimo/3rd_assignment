@@ -2,7 +2,6 @@ package com.example.assignment3;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -34,10 +33,9 @@ notifyDataSetChanged();
 LayoutInflater.inflate()
 * */
 public class MainActivity extends AppCompatActivity {
-    ArrayAdapter<String> adapter;
     CustomAdapter customAdapter;
-    ArrayList<String> listaString = new ArrayList<>();
-    ListView lista;
+    ArrayList<Date> listItems = new ArrayList<>();
+    ListView timeDateList;
     Button buttonAdd;
 
     @Override
@@ -46,16 +44,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // List that contains times and remove buttons
-        this.lista = findViewById(R.id.listTime);
+        this.timeDateList = findViewById(R.id.timeDateList);
 
         // List adapter
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listaString);
+        customAdapter = new CustomAdapter(this, listItems);
 
         // Set list adapter
-        this.lista.setAdapter(adapter);
+        this.timeDateList.setAdapter(customAdapter);
 
 
-        // Button that adds the dates to the list
+        // Button to add dates to the list
         this.buttonAdd = findViewById(R.id.buttonAdd);
         this.buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,8 +66,6 @@ public class MainActivity extends AppCompatActivity {
     private void addTimeListItem() {
         // Get current date and time
         Date dateNow = Calendar.getInstance().getTime();
-        // Format the dateNow to string with specified format
-        //String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(dateNow);
-        adapter.add(dateNow.toString());
+        customAdapter.add(dateNow);
     }
 }
